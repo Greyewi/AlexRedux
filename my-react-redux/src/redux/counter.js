@@ -1,23 +1,26 @@
+import { createSlice } from '@reduxjs/toolkit'
 const moduleName = 'counter'
-export const COUNTER_INCREASE = `${moduleName}/COUNTER_INCREASE`
-export const COUNTER_DESCENDING = `${moduleName}/COUNTER_DESCENDING`
-export const EDIT_STRING = `${moduleName}/EDIT_STRING`
 
 const initialState = {
-  value: 0,
-  string: ''
+  value: 0
 }
 
-export default function Reducer(state = initialState, action) {
-  const {type, payload} = action
-  switch (type) {
-    case COUNTER_DESCENDING:
-    case COUNTER_INCREASE:
-      return {...state, value: payload }
-    case EDIT_STRING:
-      return {...state, string: payload }
-    default:
-      return state
-  }
-}
+export const counterSlice = createSlice({
+  name: moduleName,
+  initialState,
+  reducers: {
+    increment: (state) => {
+      state.value += 1
+    },
+    decrement: (state) => {
+      state.value -= 1
+    },
+    incrementByAmount: (state, action) => {
+      state.value += action.payload
+    }
+  },
+})
 
+export const { increment, decrement } = counterSlice.actions
+
+export default counterSlice.reducer
